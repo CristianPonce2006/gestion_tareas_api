@@ -2,6 +2,7 @@ from fastapi import FastAPI, status
 from contextlib import asynccontextmanager
 from config.db import crear_db_y_tablas
 from routers.categoria_router import router as categorias_router
+from routers.tareas_router import router as tareas_router
 import models
 
 @asynccontextmanager
@@ -18,3 +19,4 @@ async def home():
     return {"message": "ok"}
 
 app.include_router(categorias_router, tags=["categorias"])
+app.include_router(tareas_router, tags=["tareas"])
