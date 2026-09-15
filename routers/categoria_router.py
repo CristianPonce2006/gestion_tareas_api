@@ -19,3 +19,15 @@ async def get_categoria(id: int,session: SessionDeDependencia):
         raise HTTPException(status_code=404, detail="Categoria no encontrada")
     return resultado_consulta
 
+@router.post("/categorias", response_model=Categoria, status_code=status.HTTP_201_CREATED)
+async def create_usuario(session: SessionDeDependencia, data: CategoriaCreate):
+    categoria_nueva = Categoria(
+        nombre=data.nombre
+    )
+    try:
+        session.add(categoria_nueva)
+        session.commit()
+        session.refresh(categoria_nueva)
+        return categoria_nueva
+    except:
+        raise HTTPException(status_code=500, detail="Error al guardar categoría")
