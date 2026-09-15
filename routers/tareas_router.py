@@ -19,3 +19,18 @@ async def get_tarea(id: int,session: SessionDeDependencia):
         raise HTTPException(status_code=404, detail="Tarea no encontrada")
     return resultado_consulta
 
+@router.post("/tareas", response_model=Tarea, status_code=status.HTTP_201_CREATED)
+async def create_tarea(session: SessionDeDependencia, data: TareaCreate):
+    tarea_nueva = Tarea(
+        usuario_id=data.usuario_id,
+        categoria_id=data.categoria_id,
+        titulo=data.titulo,
+        descripcion=data.descripcion
+    )
+    try:
+        session.add(tarea_nueva)
+        session.commit()
+        session.refresh(tarea_nueva)
+        return tarea_nueva
+    except:
+        raise HTTPException(status_code=500, detail="Error al guardar tarea")
