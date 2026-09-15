@@ -20,7 +20,7 @@ async def get_categoria(id: int,session: SessionDeDependencia):
     return resultado_consulta
 
 @router.post("/categorias", response_model=Categoria, status_code=status.HTTP_201_CREATED)
-async def create_usuario(session: SessionDeDependencia, data: CategoriaCreate):
+async def create_categoria(session: SessionDeDependencia, data: CategoriaCreate):
     categoria_nueva = Categoria(
         nombre=data.nombre
     )
